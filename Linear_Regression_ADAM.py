@@ -194,7 +194,6 @@ class ADAM(Metric_regression):
         '''
         y_pred = np.dot(x, self.theta) + (np.ones(y.shape) * self.theta_0)
         MSE_ = self.fun_MSE(y, y_pred)
-        MSE_ = MSE_.sum()
         return (MSE_)
 
         
@@ -236,8 +235,8 @@ class ADAM(Metric_regression):
         theta = self.Gradient.matrix[:,0]
         theta_0 = self.Gradient_0.matrix[:,0]
         y_pred = np.dot(x, theta) + (np.ones(y.shape) * theta_0)
-        gradient_theta = np.dot((y - y_pred), x)
-        gradient_theta = -2*gradient_theta / self.steps_epoch
+        gradient_theta = -2*np.dot((y - y_pred), x)
+        gradient_theta = gradient_theta / self.steps_epoch
         gradient_theta_0 = -2*(y - y_pred).sum() / self.steps_epoch
        
         self.Gradient.matrix[:,3] = gradient_theta
