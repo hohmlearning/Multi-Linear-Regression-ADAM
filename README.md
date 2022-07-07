@@ -13,4 +13,6 @@ The loss function is derived with respect to the weight vector $w$ and the bias 
 $$\frac{\partial L(w, w_0; X, y)}{\partial w} = -2 X^T y + 2 X^T (X w + w_0)$$
 $$ = -2 X^T (y - (X w + w_0))$$
 <br>
-$$\frac{\partial L(w, w_0; X, y)}{\partial w_0} = - 2 y^T + 2 (Xw + w_0)^T $$
+$$\frac{\partial L(w, w_0; X, y)}{\partial w_0} = - 2 (y^T I -(Xw + w_0)^T I )$$
+with: $$I \in R^{n\times1}$$
+<br>
