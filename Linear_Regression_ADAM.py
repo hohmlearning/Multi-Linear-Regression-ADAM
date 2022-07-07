@@ -81,14 +81,13 @@ class Gradient():
         self.matrix[:,2] = second_moment
         self.matrix[:,3] = gradient
         
-    def update_theta (self, sign, eta):
+    def update_theta (self, eta):
         '''
         Derived from directional derivation, the gradient is updadet.
         
 
         Parameters
         ----------
-        sign : integer - 1 or -1
         eta : float - learning rate default 0.001
 
         Returns
@@ -98,12 +97,12 @@ class Gradient():
         '''
         theta = self.matrix[:,0]
         gradient = self.matrix[:,3]
-        theta = theta - sign * eta * gradient
+        theta = theta + eta * gradient
         self.matrix[:,0] = theta 
 
         
 class ADAM(Metric_regression):
-    def __init__(self, max_epoch, batch_size=1, objective='MAX', eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14):
+    def __init__(self, max_epoch, batch_size=1, eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14):
         '''
         For explanation: https://arxiv.org/abs/1412.6980 (2022|01|02)
         Parameters
@@ -142,13 +141,6 @@ class ADAM(Metric_regression):
         self.batch = 0
         self.MSE_epoch = 100
         self.fitted = False
-        
-        if objective == 'MIN':
-            self.sign = 1
-        elif objective == 'MAX':
-            self.sign = -1
-        else:
-            raise Exception('Define objective ["MAX", "MIN"]!')
             
     def set_parameters_ADAM(self, x_data, y_true):
         '''
@@ -202,7 +194,6 @@ class ADAM(Metric_regression):
         '''
         y_pred = np.dot(x, self.theta) + (np.ones(y.shape) * self.theta_0)
         MSE_ = self.fun_MSE(y, y_pred)
-        MSE_ = MSE_.sum()
         return (MSE_)
 
         
@@ -244,8 +235,8 @@ class ADAM(Metric_regression):
         theta = self.Gradient.matrix[:,0]
         theta_0 = self.Gradient_0.matrix[:,0]
         y_pred = np.dot(x, theta) + (np.ones(y.shape) * theta_0)
-        gradient_theta = np.dot((y - y_pred), x)
-        gradient_theta = -2*gradient_theta / self.steps_epoch
+        gradient_theta = -2*np.dot((y - y_pred), x)
+        gradient_theta = gradient_theta / self.steps_epoch
         gradient_theta_0 = -2*(y - y_pred).sum() / self.steps_epoch
        
         self.Gradient.matrix[:,3] = gradient_theta
@@ -309,8 +300,8 @@ class ADAM(Metric_regression):
             self.Gradient.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             self.Gradient_0.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             
-            self.Gradient.update_theta (sign=self.sign, eta=self.eta)
-            self.Gradient_0.update_theta (sign=self.sign, eta=self.eta)
+            self.Gradient.update_theta (eta=self.eta)
+            self.Gradient_0.update_theta (eta=self.eta)
 
             self.theta = self.Gradient.matrix[:,0]
             self.theta_0 = self.Gradient_0.matrix[:,0]
@@ -411,8 +402,8 @@ class ADAM_learning_rate_decay(ADAM):
             self.Gradient.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             self.Gradient_0.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             
-            self.Gradient.update_theta (sign=self.sign, eta=self.eta)
-            self.Gradient_0.update_theta (sign=self.sign, eta=self.eta)
+            self.Gradient.update_theta (eta=self.eta)
+            self.Gradient_0.update_theta (eta=self.eta)
 
             self.theta = self.Gradient.matrix[:,0]
             self.theta_0 = self.Gradient_0.matrix[:,0]
@@ -511,8 +502,8 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
             self.Gradient.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             self.Gradient_0.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             
-            self.Gradient.update_theta (sign=self.sign, eta=self.eta)
-            self.Gradient_0.update_theta (sign=self.sign, eta=self.eta)
+            self.Gradient.update_theta (eta=self.eta)
+            self.Gradient_0.update_theta (eta=self.eta)
 
             self.theta = self.Gradient.matrix[:,0]
             self.theta_0 = self.Gradient_0.matrix[:,0]
@@ -540,8 +531,8 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
             self.Gradient.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             self.Gradient_0.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             
-            self.Gradient.update_theta (sign=self.sign, eta=self.eta)
-            self.Gradient_0.update_theta (sign=self.sign, eta=self.eta)
+            self.Gradient.update_theta (eta=self.eta)
+            self.Gradient_0.update_theta (eta=self.eta)
 
             self.theta = self.Gradient.matrix[:,0]
             self.theta_0 = self.Gradient_0.matrix[:,0]
