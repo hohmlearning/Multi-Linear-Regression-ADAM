@@ -1,5 +1,12 @@
 # Multi-Linear-Regression-ADAM
- 
+Adressing drawbacks of SGD:
+- noise gradient to do calculating on batch size
+
+ADAM:
+- Momentum: Smooths the gradient
+- Momentum$^{2}$: Smooths the momentum 
+
+
 ## Stochastic gradient descent
 ## Calculation the gradient
 With maximizing the Maximum Likelihood Estimation (MLE), the loss function, Sum of Squared Errors (SSE), is obtained:
