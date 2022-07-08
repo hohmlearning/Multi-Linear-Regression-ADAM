@@ -4,7 +4,7 @@ Adressing drawbacks of SGD:
 
 ADAM:
 - Momentum: Smooths the gradient
-- Momentum$^{2}$: Smooths the momentum; balancing the directions
+- Momentum$^{2}$: Smooths the momentum; balancing the directions for noisy and / or sparse gradients
 
 
 ## Stochastic gradient descent
