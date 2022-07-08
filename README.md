@@ -1,25 +1,21 @@
-# Multi-Linear-Regression-ADAM
+# Linear-Regression-ADAM
 In this repository, Linear-Regression is solved by Adaptive Moment Estimation ADAM with early-stopping [1]. 
 ADAM is an optimization methode for non-convex loss function. 
 Although, Linear-Regression is convex and is solved with Ordinary Least Squares, if the dataset is not too large, ADAM is capable of finding solutions. 
 In Particular, early stopping is integrated in ADAM as an regulator. 
 Early stopping is the most common used regulator in deep learning and acts similar to $L^2$ regularization [2].
-In Addition, early stopping determines the amount of regularization automatically while monitoring the validation loss or metric [2].
+In Addition, early stopping determines the amount of regularization automatically while monitoring the validation loss or metric [2].\
+In future, Linear-Regression ought to be compared with Ridge-Regression (ODE with $L^2$ regularization).
 
+## ADAM
+ADAM is a first order optimizer estimating first and second order gradients [1]. 
+ADAM is a combination of AdaGrad, which is capable of sparse gradients, and RMSProp, which suits non-stationary objectives [1]. 
+In general, stochastic optimizers refer to partial gradients.
+For fitting the gradient in the memory, batches are drawn from dataset randomly.
+Due to calculation the partial gradients, noise is introduced in the gradient.
+For smoothing the gradient, the gradient is estimated based on the momentum.
+For balancing the directions for sparse or noisy gradients, the momentum is smoothed with the average past squared gradients.
 
-Stochastic Gradient Descent (SGD).
-Adressing drawbacks of SGD:
-- noise gradient to do calculating on batch size\
-"The method combines the advantages of
-two recently popular optimization methods: the ability of AdaGrad to deal with sparse gradients,
-and the ability of RMSProp to deal with non-stationary objectives."
-ADAM:\
-Adaptive learning, estimate first and second order gradients for high-dimensional parameter spaces
-- Momentum: Smooths the gradient
-- Momentum$^{2}$: Smooths the momentum; balancing the directions for noisy and / or sparse gradients
-
-
-## Stochastic gradient descent
 ## Calculation the gradient
 With maximizing the Maximum Likelihood Estimation (MLE), the loss function, Sum of Squared Errors (SSE), is obtained:
 $$L(w, w_0; X, y) = ||y - (Xw + w_0)||^2 $$
