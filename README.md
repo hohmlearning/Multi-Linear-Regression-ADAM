@@ -34,5 +34,5 @@ with: $$\mathbb{1} \in R^{n\times1}$$
 <br>
 
 ## References
-[1] D.P. Kingma, J. Ba, Adam: A Method for Stochastic Optimization, 2014
+[1] D.P. Kingma, J. Ba, Adam: A Method for Stochastic Optimization, 2014\
 [2] I. Goodfellow, Y. Bengio, A. Courville, Deep learning, The MIT Press, Cambridge, Massachusetts, London, England, 2016
