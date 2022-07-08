@@ -1,4 +1,5 @@
 # Multi-Linear-Regression-ADAM
+In this repository, Linear-Regression is solved with ADAM [1]. Stochastic Gradient Descent (SGD).
 Adressing drawbacks of SGD:
 - noise gradient to do calculating on batch size\
 "The method combines the advantages of
@@ -27,3 +28,6 @@ $$ = -2 X^T (y - (X w + w_0))$$
 $$\frac{\partial L(w, w_0; X, y)}{\partial w_0} = - 2 (y^T \mathbb{1} -(Xw + w_0)^T \mathbb{1} )$$
 with: $$\mathbb{1} \in R^{n\times1}$$
 <br>
+
+## References
+[1] D.P. Kingma, J. Ba, Adam: A Method for Stochastic Optimization, 2014
