@@ -2,7 +2,7 @@
 Adressing drawbacks of SGD:
 - noise gradient to do calculating on batch size
 
-ADAM:
+ADAM:\
 Adaptive learning, estimate first and second order gradients
 - Momentum: Smooths the gradient
 - Momentum$^{2}$: Smooths the momentum; balancing the directions for noisy and / or sparse gradients
