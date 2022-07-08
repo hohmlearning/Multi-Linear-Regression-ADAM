@@ -1,7 +1,9 @@
 # Multi-Linear-Regression-ADAM
 Adressing drawbacks of SGD:
-- noise gradient to do calculating on batch size
-
+- noise gradient to do calculating on batch size\
+"The method combines the advantages of
+two recently popular optimization methods: the ability of AdaGrad to deal with sparse gradients,
+and the ability of RMSProp to deal with non-stationary objectives."
 ADAM:\
 Adaptive learning, estimate first and second order gradients for high-dimensional parameter spaces
 - Momentum: Smooths the gradient
