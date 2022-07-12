@@ -47,6 +47,8 @@ $$\frac{\partial L(w, w_0; X, y)}{\partial w_0} = - 2 (y^T \mathbb{1} -(Xw + w_0
 with: $$\mathbb{1} \in R^{n\times1}$$
 <br>
 
+## Early Stopping
+
 ## References
 [1] D.P. Kingma, J. Ba, Adam: A Method for Stochastic Optimization, 2014\
 [2] I. Goodfellow, Y. Bengio, A. Courville, Deep learning, The MIT Press, Cambridge, Massachusetts, London, England, 2016
