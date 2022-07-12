@@ -20,6 +20,7 @@ For balancing the directions for sparse or noisy gradients, the momentum is smoo
 The ADAM algorithm is shown in **Figure 1**.
 
 ![grafik](https://user-images.githubusercontent.com/107933496/178591917-e638d6eb-db14-44fd-9b6d-8bdc5c681a57.png)
+
 **Figure 1**: ADAM algorithmus copied from Kignma and Ba [1].
 
 The weight vector $w$ and the bias term $w_0$ is initialized to 0. 
