@@ -24,7 +24,7 @@ The ADAM algorithm is shown in **Figure 1**.
 **Figure 1**: ADAM algorithmus copied from Kignma and Ba [1].
 
 The weight vector $w$ and the bias term $w_0$ is initialized to 0. 
-Exponential moving average with the parameter
+Exponential moving average is applied to the gradient $m_t$ and the squared gradient $v_t$ with the parameter $\beta_1$ and $\beta_2$, repectively. 
 
 ## Calculation the gradient
 With maximizing the Maximum Likelihood Estimation (MLE), the loss function, Sum of Squared Errors (SSE), is obtained:
