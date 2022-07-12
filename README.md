@@ -16,6 +16,15 @@ Due to calculation the partial gradients, noise is introduced in the gradient.
 For smoothing the gradient, the gradient is estimated based on the momentum.
 For balancing the directions for sparse or noisy gradients, the momentum is smoothed with the average past squared gradients.
 
+## Algorithm
+The ADAM algorithm is shown in **Figure 1**.
+
+![grafik](https://user-images.githubusercontent.com/107933496/178591917-e638d6eb-db14-44fd-9b6d-8bdc5c681a57.png)
+
+
+The weight vector $w$ and the bias term $w_0$ is initialized to 0. 
+Exponential moving average with the parameter
+
 ## Calculation the gradient
 With maximizing the Maximum Likelihood Estimation (MLE), the loss function, Sum of Squared Errors (SSE), is obtained:
 $$L(w, w_0; X, y) = ||y - (Xw + w_0)||^2 $$
