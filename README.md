@@ -28,6 +28,7 @@ Exponential moving average is applied to the gradient and the squared gradient r
 The parameters for the exponential average are $\beta_1$ and $\beta_2$.
 First $m_t$ and second moment vector $v_t$ are initialized to 0.
 The bias-correction is applied to overcome slow convergence in the first steps $t$.
+For details, the author refers to the original paper [1].
 
 ## Calculation the gradient
 With maximizing the Maximum Likelihood Estimation (MLE), the loss function, Sum of Squared Errors (SSE), is obtained:
