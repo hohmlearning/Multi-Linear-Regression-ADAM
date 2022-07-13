@@ -48,6 +48,14 @@ with: $$\mathbb{1} \in R^{n\times1}$$
 <br>
 
 ## Early Stopping
+The trainings error is decreasing with the number of data the model has seen.
+Unfortunately, overfitting, the increase in validation and test error while decreasing the trainings error, is liekly to occur.
+Thus, the model capability to generalize is decreasing.
+Early stopping is a methode to overcome overfitting acting similar to the $L^2$ regularization [2].\
+Internally, the trainings data set is splitted into subtrain (80 %) and validation (20 %) data set.
+While applying early stopping, after each 
+
+
 
 ## References
 [1] D.P. Kingma, J. Ba, Adam: A Method for Stochastic Optimization, 2014\
