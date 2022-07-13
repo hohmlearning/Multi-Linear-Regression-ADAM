@@ -46,6 +46,7 @@ $$ = -2 X^T (y - (X w + w_0))$$
 $$\frac{\partial L(w, w_0; X, y)}{\partial w_0} = - 2 (y^T \mathbb{1} -(Xw + w_0)^T \mathbb{1} )$$
 with: $$\mathbb{1} \in R^{n\times1}$$
 <br>
+## Adaptive learning rate
 
 ## Early Stopping
 The trainings error is decreasing with the number of data the model has seen.
