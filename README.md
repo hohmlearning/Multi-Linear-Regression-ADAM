@@ -51,11 +51,17 @@ with: $$\mathbb{1} \in R^{n\times1}$$
 Although ADAM is an adaptive learning algorithm, the minimal loss function is archive with the optimal learning rate.
 Thereby, the optimal learning rate is model and problem specific. 
 In analogy to Zhang and Sun [3], the learning rate is changed, whenever the error and / or loss plateaus.\
-When **ADAM_learning_rate_decay** is deployed, the optimal paramter (weight $w$ and bias $w_0$) and the learning rate decay are validated consulting the error. 
+When **ADAM_learning_rate_decay** is deployed, the optimal paramters (weight $w$ and bias $w_0$) and the learning rate decay are validated consulting the error. 
 If a validation set is given when calling, the error of the validation data is kept track.
 Otherwise, the trainings error is consulted. 
+At the end of each epoch, the parameters are saved and the **patience counter** is set to 0, if an optimal error was archived.
+Whenever no improvement of the error after an epoch is made, the **patience counter** is increased by 1.
+The learning rate is decayed, when the **patience counter** equals the patience set with the call.
+The new learning rate is adapted:
 
-
+$$
+\eta <- \frac{\eta}{\sqrt{10}}
+$$
 
 
 
