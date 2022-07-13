@@ -46,7 +46,14 @@ $$ = -2 X^T (y - (X w + w_0))$$
 $$\frac{\partial L(w, w_0; X, y)}{\partial w_0} = - 2 (y^T \mathbb{1} -(Xw + w_0)^T \mathbb{1} )$$
 with: $$\mathbb{1} \in R^{n\times1}$$
 <br>
-## Adaptive learning rate
+
+## Learning rate decay
+Although ADAM is an adaptive learning algorithm, the minimal loss function is archive with the optimal learning rate.
+Thereby, the optimal learning rate is model and problem specific. 
+In analogy to Zhang and Sun [3], the learning rate is changed, whenever the validation error and / or loss plateaus.
+
+
+
 
 ## Early Stopping
 The trainings error is decreasing with the number of data the model has seen.
@@ -60,4 +67,5 @@ While applying early stopping, after each
 
 ## References
 [1] D.P. Kingma, J. Ba, Adam: A Method for Stochastic Optimization, 2014\
-[2] I. Goodfellow, Y. Bengio, A. Courville, Deep learning, The MIT Press, Cambridge, Massachusetts, London, England, 2016
+[2] I. Goodfellow, Y. Bengio, A. Courville, Deep learning, The MIT Press, Cambridge, Massachusetts, London, England, 2016\
+[3] K. He, X. Zhang, S. Ren, J. Sun, Deep Residual Learning for Image Recognition, 2015
