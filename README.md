@@ -60,7 +60,7 @@ The learning rate is decayed, when the **patience counter** equals the patience 
 The new learning rate is adapted:
 
 $$
-\eta <- \frac{\eta}{\sqrt{10}}
+\eta \leftarrow \frac{\eta}{\sqrt{10}}
 $$
 
 
