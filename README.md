@@ -62,7 +62,7 @@ The learning rate is decayed, when the **patience counter** equals the patience 
 The new learning $\eta$ rate is adapted:
 
 $$
-\eta \leftarrow \frac{\eta}{\sqrt{10}}
+  \eta \leftarrow \frac{\eta}{\sqrt{10}}
 $$
 
 When the learning $\eta$ reaches 10$^{-5}$, the algorithm is stopped. 
@@ -74,8 +74,10 @@ Unfortunately, overfitting, the increase in validation and test error while decr
 Thus, the model capability to generalize is decreasing.
 Early stopping is a methode to overcome overfitting acting similar to the $L^2$ regularization [2].\
 When calling **ADAM_learning_rate_decay_full_train**, the trainings data set is splitted into subtrain (80 %) and validation (20 %) data set.
-While applying early stopping, the learning rate is decayed and the optimal parameters based on the validation error are save as described in **Learning rate decay**.
-
+While applying early stopping, the learning rate is decayed and the optimal parameters based on the validation error are save as described in **Learning rate decay**.\
+After training on the subtrain data, the error of the subtrain data is stored. 
+Then the model is trained on the full data (subtrain and validation), while keeping track on the error of the validation data.
+If either the error on the validation data is bellow the error on the subtrain data or the maximum number of epoch is reached, the algorithm is stopped. Unseen data is predicted with the saved weights $w$ and bias $w_0$. 
 
 ## References
 [1] D.P. Kingma, J. Ba, Adam: A Method for Stochastic Optimization, 2014\
