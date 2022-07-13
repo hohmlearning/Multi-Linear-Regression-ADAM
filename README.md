@@ -47,7 +47,9 @@ $$\frac{\partial L(w, w_0; X, y)}{\partial w_0} = - 2 (y^T \mathbb{1} -(Xw + w_0
 with: $$\mathbb{1} \in R^{n\times1}$$
 <br>
 
-## Learning rate decay
+## Learning rate decay and early stopping
+### Learning rate decay
+
 Although ADAM is an adaptive learning algorithm, the minimal loss function is archive with the optimal learning rate.
 Thereby, the optimal learning rate is model and problem specific. 
 In analogy to Zhang and Sun [3], the learning rate is changed, whenever the error and / or loss plateaus.\
@@ -57,22 +59,21 @@ Otherwise, the trainings error is consulted.
 At the end of each epoch, the parameters are saved and the **patience counter** is set to 0, if an optimal error was archived.
 Whenever no improvement of the error after an epoch is made, the **patience counter** is increased by 1.
 The learning rate is decayed, when the **patience counter** equals the patience set with the call.
-The new learning rate is adapted:
+The new learning $\eta$ rate is adapted:
 
 $$
 \eta \leftarrow \frac{\eta}{\sqrt{10}}
 $$
 
+When the learning $\eta$ reaches 10$^{-5}$, the algorithm is stopped.
 
-
-## Early Stopping
+### Early Stopping
 The trainings error is decreasing with the number of data the model has seen.
 Unfortunately, overfitting, the increase in validation and test error while decreasing the trainings error, is liekly to occur.
 Thus, the model capability to generalize is decreasing.
 Early stopping is a methode to overcome overfitting acting similar to the $L^2$ regularization [2].\
-Internally, the trainings data set is splitted into subtrain (80 %) and validation (20 %) data set.
-While applying early stopping, after each 
-
+When calling **ADAM_learning_rate_decay_full_train**, the trainings data set is splitted into subtrain (80 %) and validation (20 %) data set.
+While applying early stopping, the learning rate is decayed and the optimal parameters based on the validation error are save as described in **Learning rate decay**.
 
 
 ## References
