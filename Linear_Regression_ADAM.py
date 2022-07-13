@@ -390,6 +390,10 @@ class ADAM_learning_rate_decay(ADAM):
         print('#'*50)
             
 class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):     
+    def __init__(self, max_epoch, batch_size=1, eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14, patience=1E4):
+        super().__init__(max_epoch, batch_size, eta, beta_1, beta_2, epsilon, MSE_epsilon, patience)
+        self.start_eta = eta
+        
     def set_parameters_ADAM(self, x_data, y_true):
         if self.fitted == True:
             self.epoch = 0
@@ -486,7 +490,8 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
         iteration = 1
         self.x = x_data
         self.y_true = y_true
-        while self.best_MSE > MSE_sub_train and iteration < self.max_epoch * 10:
+        self.eta = self.start_eta
+        while self.best_MSE > MSE_sub_train and iteration < self.max_epoch:
             x_batch, y_batch = self.get_item() 
             self.calc_gradient(x_batch, y_batch)
             
