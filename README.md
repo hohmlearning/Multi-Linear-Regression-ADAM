@@ -65,7 +65,8 @@ $$
 \eta \leftarrow \frac{\eta}{\sqrt{10}}
 $$
 
-When the learning $\eta$ reaches 10$^{-5}$, the algorithm is stopped.
+When the learning $\eta$ reaches 10$^{-5}$, the algorithm is stopped. 
+Unseen data is predicted with the saved weights $w$ and bias $w_0$. 
 
 ### Early Stopping
 The trainings error is decreasing with the number of data the model has seen.
