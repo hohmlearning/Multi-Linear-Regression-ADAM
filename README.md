@@ -1,6 +1,6 @@
 # Linear-Regression-ADAM
 In this repository, Linear-Regression is solved by Adaptive Moment Estimation ADAM with early-stopping [1]. 
-ADAM is an optimization methode for non-convex loss function. 
+ADAM is an optimization method for non-convex loss function. 
 Although, Linear-Regression is convex and is solved with Ordinary Least Squares, if the dataset is not too large, ADAM is capable of finding solutions. 
 In Particular, early stopping is integrated in ADAM as an regulator. 
 Early stopping is the most common used regulator in deep learning and acts similar to $L^2$ regularization [2].
@@ -21,7 +21,7 @@ The ADAM algorithm is shown in **Figure 1**.
 
 ![grafik](https://user-images.githubusercontent.com/107933496/178591917-e638d6eb-db14-44fd-9b6d-8bdc5c681a57.png)
 
-**Figure 1**: ADAM algorithmus copied from Kignma and Ba [1].
+**Figure 1**: ADAM algorithms copied from Kignma and Ba [1].
 
 The weight vector $w$ and the bias term $w_0$ is initialized to 0. 
 Exponential moving average is applied to the gradient and the squared gradient resulting in first $m_t$ and second moment vector $v_t$, respectively.
@@ -34,7 +34,7 @@ For details, the author refers to the original paper [1].
 With maximizing the Maximum Likelihood Estimation (MLE), the loss function, Sum of Squared Errors (SSE), is obtained:
 $$L(w, w_0; X, y) = ||y - (Xw + w_0)||^2 $$
 
-The expression is rarranged:
+The expression is rearranged:
 $$L(w, w_0; X, y) = (y - (Xw + w_0))^T   (y - (Xw + w_0))$$
 
 $$L(w, w_0; X, y) = y^Ty - y^T(Xw + w_0) - (Xw + w_0)^T y + (Xw + w_0)^T  (Xw + w_0)$$
@@ -53,7 +53,7 @@ with: $$\mathbb{1} \in R^{n\times1}$$
 Although ADAM is an adaptive learning algorithm, the minimal loss function is archive with the optimal learning rate.
 Thereby, the optimal learning rate is model and problem specific. 
 In analogy to Zhang and Sun [3], the learning rate is changed, whenever the error and / or loss plateaus.\
-When **ADAM_learning_rate_decay** is deployed, the optimal paramters (weight $w$ and bias $w_0$) and the learning rate decay are validated consulting the error. 
+When **ADAM_learning_rate_decay** is deployed, the optimal parameters (weight $w$ and bias $w_0$) and the learning rate decay are validated consulting the error. 
 If a validation set is given when calling, the error of the validation data is kept track.
 Otherwise, the trainings error is consulted. 
 At the end of each epoch, the parameters are saved and the **patience counter** is set to 0, if an optimal error was archived.
@@ -70,14 +70,14 @@ Unseen data is predicted with the saved weights $w$ and bias $w_0$.
 
 ### Early Stopping
 The trainings error is decreasing with the number of data the model has seen.
-Unfortunately, overfitting, the increase in validation and test error while decreasing the trainings error, is liekly to occur.
+Unfortunately, overfitting, the increase in validation and test error while decreasing the trainings error, is likely to occur.
 Thus, the model capability to generalize is decreasing.
-Early stopping is a methode to overcome overfitting acting similar to the $L^2$ regularization [2].\
+Early stopping is a method to overcome overfitting acting similar to the $L^2$ regularization [2].\
 When calling **ADAM_learning_rate_decay_full_train**, the trainings data set is splitted into subtrain (80 %) and validation (20 %) data set.
 While applying early stopping, the learning rate is decayed and the optimal parameters based on the validation error are save as described in **Learning rate decay**.\
 After training on the subtrain data, the error of the subtrain data is stored. 
 Then the model is trained on the full data (subtrain and validation), while keeping track on the error of the validation data.
-If either the error on the validation data is bellow the error on the subtrain data or the maximum number of epoch is reached, the algorithm is stopped. Unseen data is predicted with the saved weights $w$ and bias $w_0$. 
+If either the error on the validation data is below the error on the subtrain data or the maximum number of epoch is reached, the algorithm is stopped. Unseen data is predicted with the saved weights $w$ and bias $w_0$. 
 
 ## References
 [1] D.P. Kingma, J. Ba, Adam: A Method for Stochastic Optimization, 2014\
