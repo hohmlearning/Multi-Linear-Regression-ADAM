@@ -394,7 +394,6 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
     def __init__(self, max_epoch, batch_size=1, eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14, patience=1E4):
         super().__init__(max_epoch, batch_size, eta, beta_1, beta_2, epsilon, MSE_epsilon, patience)
         self.start_eta = eta
-        pdb.set_trace()
         
     def set_parameters_ADAM(self, x_data, y_true):
         if self.fitted == True:
@@ -481,7 +480,6 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
             
             if self.epoch_best_model < self.patience :
                 if self.eta < 1E-5:
-                    import pdb; pdb.set_trace()
                     train_flag = False 
             else:
                 self.eta = self.eta / np.power(10, 0.5)
@@ -491,12 +489,13 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
                 print('New learning rate:', self.eta)
         
         MSE_sub_train = self.MSE(self.X_sub_train, self.y_sub_train)
-        iteration = 1
         self.x = x_data
         self.y_true = y_true
         self.eta = self.start_eta
-        print('Full Train', self.eta)
-        while self.best_MSE > MSE_sub_train and iteration < self.max_epoch:
+        self.epoch_best_model = 0
+        print('Start full training!')
+        train_flag = True
+        while self.best_MSE > MSE_sub_train and self.epoch  < self.max_epoch and train_flag == True:
             x_batch, y_batch = self.get_item() 
             self.calc_gradient(x_batch, y_batch)
             
@@ -509,5 +508,14 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
             self.theta = self.Gradient.matrix[:,0]
             self.theta_0 = self.Gradient_0.matrix[:,0]
             self.update_batch()
-            iteration = iteration + 1                    
+            
+            if self.epoch_best_model < self.patience :
+                if self.eta < 1E-5:
+                    train_flag = False 
+            else:
+                self.eta = self.eta / np.power(10, 0.5)
+                self.epoch_best_model = 0
+                self.epoch = 0
+                self.batch = 0
+                print('New learning rate:', self.eta)             
         print('#'*50)
