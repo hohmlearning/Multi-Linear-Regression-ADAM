@@ -129,6 +129,7 @@ class ADAM(Metric_regression):
         self.batch = 0
         self.MSE_epoch = 100
         self.fitted = False
+        self.name = 'SGD with Adam'
             
     def set_parameters_ADAM(self, x_data, y_true):
         '''
@@ -286,6 +287,7 @@ class ADAM_learning_rate_decay(ADAM):
     def __init__(self, max_epoch, batch_size=1, eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14, patience=1E4):
         super().__init__(max_epoch, batch_size, eta, beta_1, beta_2, epsilon, MSE_epsilon)
         self.patience = patience
+        self.name = 'SGD with ADAM and learning rate decay'
         
     def set_parameters_ADAM(self, x_data, y_true):
         super().set_parameters_ADAM(x_data, y_true)
@@ -394,6 +396,7 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
     def __init__(self, max_epoch, batch_size=1, eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14, patience=1E4):
         super().__init__(max_epoch, batch_size, eta, beta_1, beta_2, epsilon, MSE_epsilon, patience)
         self.start_eta = eta
+        self.name = 'SGD with ADAM and learning rate decay and full training'
         
     def set_parameters_ADAM(self, x_data, y_true):
         if self.fitted == True:
