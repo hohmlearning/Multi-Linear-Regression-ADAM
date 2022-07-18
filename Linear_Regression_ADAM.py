@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Jun 14 20:18:10 2022
-
 @author: Manuel
 """
+
 import numpy as np
 import sys
 path = r'E:\Eigene Dateien\2022\Project_Git_hub'
@@ -32,15 +32,12 @@ class Gradient():
         A Maxtrix (dimension_features x 4) is initialized with ceros filled.
         In the 1 dimension the weights theta, the first moment, second moment,
         and the gradient is stored.
-
         Parameters
         ----------
         dimension : integer
-
         Returns
         -------
         None.
-
         '''
         self.name_columns = ['theta', 'first moment', 'second moment', 'gradient']
         self.matrix =  np.zeros([dimension, len(self.name_columns)])
@@ -52,7 +49,6 @@ class Gradient():
         scaled with the second moment. Both are bias corrected by beta_1**t and
         beta_2**t, respectively.
         https://arxiv.org/abs/1412.6980 (2022|01|02)
-
         Parameters
         ----------
         beta_1 : float - in range (0,1) default value beta_1 = 0.9
@@ -61,11 +57,9 @@ class Gradient():
                  exponential decay for the second moments.
         epsilon : float - avoids division through 0
         t : integer - Bias correction. For each batch t = t + 1
-
         Returns
         -------
         
-
         '''
         first_moment = self.matrix[:,1]
         second_moment =  self.matrix[:,2]
@@ -81,29 +75,25 @@ class Gradient():
         self.matrix[:,2] = second_moment
         self.matrix[:,3] = gradient
         
-    def update_theta (self, sign, eta):
+    def update_theta (self, eta):
         '''
         Derived from directional derivation, the gradient is updadet.
         
-
         Parameters
         ----------
-        sign : integer - 1 or -1
         eta : float - learning rate default 0.001
-
         Returns
         -------
         None.
-
         '''
         theta = self.matrix[:,0]
         gradient = self.matrix[:,3]
-        theta = theta - sign * eta * gradient
+        theta = theta - eta * gradient
         self.matrix[:,0] = theta 
 
         
 class ADAM(Metric_regression):
-    def __init__(self, max_epoch, batch_size=1, objective='MAX', eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14):
+    def __init__(self, max_epoch, batch_size=1, eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14):
         '''
         For explanation: https://arxiv.org/abs/1412.6980 (2022|01|02)
         Parameters
@@ -119,16 +109,13 @@ class ADAM(Metric_regression):
         epsilon : TYPE, optional
             DESCRIPTION. The default is 1E-8.
         MSE_epsilon : float - Additional criterium for MSE on epoch -  The default is 1E-14.
-
         Raises
         ------
         Exception
             DESCRIPTION.
-
         Returns
         -------
         None.
-
         '''
         np.random.seed(42)
         self.eta = eta
@@ -142,28 +129,19 @@ class ADAM(Metric_regression):
         self.batch = 0
         self.MSE_epoch = 100
         self.fitted = False
-        
-        if objective == 'MIN':
-            self.sign = 1
-        elif objective == 'MAX':
-            self.sign = -1
-        else:
-            raise Exception('Define objective ["MAX", "MIN"]!')
+        self.name = 'SGD with Adam'
             
     def set_parameters_ADAM(self, x_data, y_true):
         '''
         If not retraining all paramters are initilized to cero.
         For retraining only epoch and batch is set to cero.
-
         Parameters
         ----------
         x_data : numpy array (datapoints x dimension) - X-matrix
         y_true : numpy array (datapoints) - prediction
-
         Returns
         -------
         None.
-
         '''
         if self.fitted == True:
             self.epoch = 0
@@ -202,7 +180,6 @@ class ADAM(Metric_regression):
         '''
         y_pred = np.dot(x, self.theta) + (np.ones(y.shape) * self.theta_0)
         MSE_ = self.fun_MSE(y, y_pred)
-        MSE_ = MSE_.sum()
         return (MSE_)
 
         
@@ -210,11 +187,9 @@ class ADAM(Metric_regression):
         '''
         Updates batch and epoch. Calculates the MSE after each epoch
         and shuffles the elements after each epoch.
-
         Returns
         -------
         None.
-
         '''
         if self.batch+1 < self.steps_epoch:
             self.batch = self.batch + 1
@@ -230,23 +205,20 @@ class ADAM(Metric_regression):
         '''
         The gradient of theta and theta_0 is calculated according to
         the loss function MSE.
-
         Parameters
         ----------
         x_data : numpy array (datapoints x dimension) - X-matrix
         y_true : numpy array (datapoints) - prediction
-
         Returns
         -------
         None.
-
         '''        
         theta = self.Gradient.matrix[:,0]
         theta_0 = self.Gradient_0.matrix[:,0]
         y_pred = np.dot(x, theta) + (np.ones(y.shape) * theta_0)
-        gradient_theta = np.dot((y - y_pred), x)
-        gradient_theta = -2*gradient_theta / self.steps_epoch
-        gradient_theta_0 = -2*(y - y_pred).sum() / self.steps_epoch
+        gradient_theta = -2*np.dot((y - y_pred), x)
+        gradient_theta = gradient_theta# / self.steps_epoch
+        gradient_theta_0 = -2*(y - y_pred).sum() # / self.steps_epoch
        
         self.Gradient.matrix[:,3] = gradient_theta
         self.Gradient_0.matrix[:,3] = gradient_theta_0
@@ -255,11 +227,9 @@ class ADAM(Metric_regression):
         '''
         For faster and non biased convergence, the dataset is shufled using 
         the indices of X_train, y_train.
-
         Returns
         -------
         None.
-
         '''
         n_shufled = np.random.permutation(self.number_elements)
         return(n_shufled)
@@ -267,12 +237,10 @@ class ADAM(Metric_regression):
     def get_item (self):
         '''
         For each batch, selects the corresponding data from X_train and y_train.
-
         Returns
         -------
         x_batch : numpy array (datapoints x dimension) - X-matrix
         y_batch : numpy array (datapoints) - prediction
-
         '''
         start = self.batch * self.batch_size
         end = start + self.batch_size
@@ -287,16 +255,13 @@ class ADAM(Metric_regression):
         not reached and the MSE_epoch has not reached the given difference.
         
         For explanation: https://arxiv.org/abs/1412.6980 (2022|01|02)
-
         Parameters
         ----------
         x_data : numpy array (datapoints x dimension) - X-matrix
         y_true : numpy array (datapoints) - prediction
-
         Returns
         -------
         None.
-
         '''
         self.set_parameters_ADAM(x_data, 
                                 y_true)
@@ -309,8 +274,8 @@ class ADAM(Metric_regression):
             self.Gradient.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             self.Gradient_0.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             
-            self.Gradient.update_theta (sign=self.sign, eta=self.eta)
-            self.Gradient_0.update_theta (sign=self.sign, eta=self.eta)
+            self.Gradient.update_theta (eta=self.eta)
+            self.Gradient_0.update_theta (eta=self.eta)
 
             self.theta = self.Gradient.matrix[:,0]
             self.theta_0 = self.Gradient_0.matrix[:,0]
@@ -319,9 +284,10 @@ class ADAM(Metric_regression):
         print('#'*50)
 
 class ADAM_learning_rate_decay(ADAM):
-    def __init__(self, max_epoch, batch_size=1, objective='MIN', eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14, patience=1E4):
-        super().__init__(max_epoch, batch_size, objective, eta, beta_1, beta_2, epsilon, MSE_epsilon)
+    def __init__(self, max_epoch, batch_size=1, eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14, patience=1E4):
+        super().__init__(max_epoch, batch_size, eta, beta_1, beta_2, epsilon, MSE_epsilon)
         self.patience = patience
+        self.name = 'SGD with ADAM and learning rate decay'
         
     def set_parameters_ADAM(self, x_data, y_true):
         super().set_parameters_ADAM(x_data, y_true)
@@ -334,11 +300,9 @@ class ADAM_learning_rate_decay(ADAM):
         '''
         Updates batch and epoch. Calculates the MSE after each epoch
         and shuffles the elements after each epoch.
-
         Returns
         -------
         None.
-
         '''
         if type(self.X_val) == str:
             if self.batch+1 < self.steps_epoch:
@@ -384,16 +348,13 @@ class ADAM_learning_rate_decay(ADAM):
         not reached and the MSE_epoch has not reached the given difference.
         
         For explanation: https://arxiv.org/abs/1412.6980 (2022|01|02)
-
         Parameters
         ----------
         x_data : numpy array (datapoints x dimension) - X-matrix
         y_true : numpy array (datapoints) - prediction
-
         Returns
         -------
         None.
-
         '''
         if type(X_val)==str:
             self.X_val = 'Not given'
@@ -411,8 +372,8 @@ class ADAM_learning_rate_decay(ADAM):
             self.Gradient.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             self.Gradient_0.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             
-            self.Gradient.update_theta (sign=self.sign, eta=self.eta)
-            self.Gradient_0.update_theta (sign=self.sign, eta=self.eta)
+            self.Gradient.update_theta (eta=self.eta)
+            self.Gradient_0.update_theta (eta=self.eta)
 
             self.theta = self.Gradient.matrix[:,0]
             self.theta_0 = self.Gradient_0.matrix[:,0]
@@ -432,6 +393,11 @@ class ADAM_learning_rate_decay(ADAM):
         print('#'*50)
             
 class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):     
+    def __init__(self, max_epoch, batch_size=1, eta=0.001, beta_1=0.9, beta_2=0.99, epsilon=1E-8, MSE_epsilon=1E-14, patience=1E4):
+        super().__init__(max_epoch, batch_size, eta, beta_1, beta_2, epsilon, MSE_epsilon, patience)
+        self.start_eta = eta
+        self.name = 'SGD with ADAM and learning rate decay and full training'
+        
     def set_parameters_ADAM(self, x_data, y_true):
         if self.fitted == True:
             self.epoch = 0
@@ -443,11 +409,9 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
         '''
         Updates batch and epoch. Calculates the MSE after each epoch
         and shuffles the elements after each epoch.
-
         Returns
         -------
         None.
-
         '''
        
         if self.batch+1 < self.steps_epoch:
@@ -481,16 +445,13 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
         (self.max_epoch * 100):
         
         For explanation: https://arxiv.org/abs/1412.6980 (2022|01|02)
-
         Parameters
         ----------
         x_data : numpy array (datapoints x dimension) - X-matrix
         y_true : numpy array (datapoints) - prediction
-
         Returns
         -------
         None.
-
         '''
         n_split = int(y_true.shape[0] * 0.8)
          
@@ -504,15 +465,16 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
                                 self.y_sub_train)
         self.t = 1
         self.best_eta = self.eta
-        while self.epoch <= self.max_epoch:
+        train_flag = True
+        while self.epoch <= self.max_epoch and train_flag == True:
             x_batch, y_batch = self.get_item() 
             self.calc_gradient(x_batch, y_batch)
             
             self.Gradient.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             self.Gradient_0.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             
-            self.Gradient.update_theta (sign=self.sign, eta=self.eta)
-            self.Gradient_0.update_theta (sign=self.sign, eta=self.eta)
+            self.Gradient.update_theta (eta=self.eta)
+            self.Gradient_0.update_theta (eta=self.eta)
 
             self.theta = self.Gradient.matrix[:,0]
             self.theta_0 = self.Gradient_0.matrix[:,0]
@@ -521,7 +483,7 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
             
             if self.epoch_best_model < self.patience :
                 if self.eta < 1E-5:
-                    break 
+                    train_flag = False 
             else:
                 self.eta = self.eta / np.power(10, 0.5)
                 self.epoch_best_model = 0
@@ -530,22 +492,33 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
                 print('New learning rate:', self.eta)
         
         MSE_sub_train = self.MSE(self.X_sub_train, self.y_sub_train)
-        iteration = 1
         self.x = x_data
         self.y_true = y_true
-        while self.best_MSE > MSE_sub_train and iteration < self.max_epoch * 10:
+        self.eta = self.start_eta
+        self.epoch_best_model = 0
+        print('Start full training!')
+        train_flag = True
+        while self.best_MSE > MSE_sub_train and self.epoch  < self.max_epoch and train_flag == True:
             x_batch, y_batch = self.get_item() 
             self.calc_gradient(x_batch, y_batch)
             
             self.Gradient.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             self.Gradient_0.correct_gradient(beta_1=self.beta_1, beta_2=self.beta_2, epsilon=self.epsilon, t=self.t)
             
-            self.Gradient.update_theta (sign=self.sign, eta=self.eta)
-            self.Gradient_0.update_theta (sign=self.sign, eta=self.eta)
+            self.Gradient.update_theta (eta=self.eta)
+            self.Gradient_0.update_theta (eta=self.eta)
 
             self.theta = self.Gradient.matrix[:,0]
             self.theta_0 = self.Gradient_0.matrix[:,0]
             self.update_batch()
-            iteration = iteration + 1                    
+            
+            if self.epoch_best_model < self.patience :
+                if self.eta < 1E-5:
+                    train_flag = False 
+            else:
+                self.eta = self.eta / np.power(10, 0.5)
+                self.epoch_best_model = 0
+                self.epoch = 0
+                self.batch = 0
+                print('New learning rate:', self.eta)             
         print('#'*50)
-    
