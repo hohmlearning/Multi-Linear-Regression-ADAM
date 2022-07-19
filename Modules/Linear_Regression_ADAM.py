@@ -5,11 +5,12 @@ Created on Tue Jun 14 20:18:10 2022
 """
 
 import numpy as np
+'''
 import sys
 path = r'E:\Eigene Dateien\2022\Project_Git_hub'
 if path not in sys.path:
     sys.path.append(path)
-
+'''
 from Evaluation_Metric import Metric_regression
     
 class Gradient():
@@ -198,7 +199,7 @@ class ADAM(Metric_regression):
             self.batch = 0
             self.ordered_elements = self.shuffle()
             self.MSE_epoch = self.MSE(self.x, self.y_true)
-            if self.epoch % 100 == 0:
+            if self.epoch % int(self.max_epoch / 10) == 0:
                 print('Epoch: {} | MSE_train: {:.2f}'.format(self.epoch, self.MSE_epoch))
         
     def calc_gradient(self, x, y):
@@ -313,7 +314,7 @@ class ADAM_learning_rate_decay(ADAM):
                 self.ordered_elements = self.shuffle()
                 self.MSE_train_epoch = self.MSE(self.x, self.y_true)
                 self.epoch_best_model = self.epoch_best_model + 1
-                if self.epoch % 100 == 0:
+                if self.epoch % int(self.max_epoch / 10) == 0:
                     print('Epoch: {} | MSE_train: {:.2f}'.format(self.epoch, self.MSE_train_epoch))
                 
                 if self.MSE_train_epoch < self.best_MSE:
@@ -332,7 +333,7 @@ class ADAM_learning_rate_decay(ADAM):
                 self.MSE_train_epoch = self.MSE(self.x, self.y_true)
                 self.MSE_val = self.MSE(self.X_val, self.y_val)
                 self.epoch_best_model = self.epoch_best_model + 1
-                if self.epoch % 100 == 0:
+                if self.epoch % int(self.max_epoch / 10) == 0:
                     print('Epoch: {} | MSE_train: {:.2f} | MSE_val: {:.2f}'.format(self.epoch, self.MSE_train_epoch, self.MSE_val))
                     
                 
@@ -388,7 +389,7 @@ class ADAM_learning_rate_decay(ADAM):
                 self.epoch_best_model = 0
                 self.epoch = 0
                 self.batch = 0
-                print('New learning rate:', self.eta)
+                print('New learning rate: {:.2g}'.format(self.eta))
                 
         print('#'*50)
             
@@ -423,7 +424,7 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
             self.MSE_train_epoch = self.MSE(self.x, self.y_true)
             self.MSE_val = self.MSE(self.X_val, self.y_val)
             self.epoch_best_model = self.epoch_best_model + 1
-            if self.epoch % 100 == 0:
+            if self.epoch % int(self.max_epoch / 10) == 0:
                 print('Epoch: {} | MSE_train: {:.2f} | MSE_val: {:.2f}'.format(self.epoch, self.MSE_train_epoch, self.MSE_val))
             
             if self.MSE_val < self.best_MSE:
@@ -489,7 +490,7 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
                 self.epoch_best_model = 0
                 self.epoch = 0
                 self.batch = 0
-                print('New learning rate:', self.eta)
+                print('New learning rate: {:.2g}'.format(self.eta))
         
         MSE_sub_train = self.MSE(self.X_sub_train, self.y_sub_train)
         self.x = x_data
@@ -520,5 +521,5 @@ class ADAM_learning_rate_decay_full_train(ADAM_learning_rate_decay):
                 self.epoch_best_model = 0
                 self.epoch = 0
                 self.batch = 0
-                print('New learning rate:', self.eta)             
+                print('New learning rate: {:.2g}'.format(self.eta))  
         print('#'*50)
