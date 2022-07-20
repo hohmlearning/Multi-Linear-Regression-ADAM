@@ -362,6 +362,7 @@ class ADAM_learning_rate_decay(ADAM):
         else:
             self.X_val = X_val
             self.y_val = y_val
+            self.name = self.name + ' metric on val'
             
         self.set_parameters_ADAM(x_data, 
                                 y_true)
