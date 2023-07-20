@@ -44,10 +44,10 @@ $$\frac{\partial L(w, w_0; X, y)}{\partial w} = -2 X^T y + 2 X^T (X w + w_0)$$
 
 $$\frac{\partial L(w, w_0; X, y)}{\partial w}   = -2 X^T (y - (X w + w_0))$$
 
-<br>
-$$\frac{\partial L(w, w_0; X, y)}{\partial w_0} = - 2 (y^T \mathbb{1} -(Xw + w_0)^T \mathbb{1} )$$
 
-<br>
+$$\frac{\partial L(w, w_0; X, y)}{\partial w_0} = - 2 (y^T \mathbb{1} -(Xw + w_0)^T \mathbb{1} )$$
+with: $$\mathbb{1} \in R^{n\times1}$$
+
 
 ## Learning rate decay and early stopping
 ### Learning rate decay
